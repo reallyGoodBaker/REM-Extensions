@@ -1,4 +1,4 @@
-import '../../@lib/jquery.js'
+const $ = require('../../@lib/jquery.js')
 
 const { ipcRenderer } = require('electron')
 const player = connect('player-controller')
@@ -15,7 +15,6 @@ const playerUpdate = subscribe('player', render)
 let mainWinVisible = false
 const mainWindowUpdate = subscribe('mainWindowVisible', ([ visible ]) => {
     mainWinVisible = visible
-    console.log(mainWinVisible)
 
     visible
         ? $('#expand').addClass('col')

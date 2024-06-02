@@ -75,8 +75,6 @@ async function tasks(sourcemap=true) {
                     sourcemap
                 },
                 plugins: [
-                    resolve(),
-                    commonjs(),
                     typescriptPaths(),
                     typescript(),
                 ],
@@ -92,8 +90,6 @@ async function tasks(sourcemap=true) {
                     sourcemap
                 },
                 plugins: [
-                    resolve(),
-                    commonjs(),
                     typescriptPaths(),
                     typescript(),
                 ],
@@ -109,8 +105,6 @@ async function tasks(sourcemap=true) {
                     sourcemap
                 },
                 plugins: [
-                    resolve(),
-                    commonjs(),
                     typescriptPaths(),
                     typescript(),
                 ],
@@ -130,8 +124,6 @@ async function tasks(sourcemap=true) {
                             sourcemap
                         },
                         plugins: [
-                            resolve(),
-                            commonjs(),
                             typescriptPaths(),
                             typescript()
                         ]
@@ -149,7 +141,8 @@ async function tasks(sourcemap=true) {
                         hmr: false,
                         autoInstall: false,
                         target: 'electron',
-                        sourceMaps: sourcemap
+                        sourceMaps: sourcemap,
+                        publicUrl: './',
                     })
 
                     await bundler.bundle()
