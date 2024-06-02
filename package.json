@@ -1,0 +1,28 @@
+{
+    "name": "rem-extensions",
+    "version": "1.0.0",
+    "description": "",
+    "main": "index.js",
+    "scripts": {
+        "build-source": "node ./scripts/build-source.js",
+        "build": "node ./scripts/build.js"
+    },
+    "author": "",
+    "license": "ISC",
+    "target": "electron",
+    "devDependencies": {
+        "@rollup/plugin-commonjs": "^25.0.8",
+        "@rollup/plugin-node-resolve": "^15.2.3",
+        "@rollup/plugin-typescript": "^11.1.6",
+        "cli-progress": "^3.12.0",
+        "cpy": "^11.0.1",
+        "electron": "^30.0.8",
+        "parcel-bundler": "^1.12.5",
+        "rollup": "^4.18.0",
+        "rollup-plugin-typescript-paths": "^1.5.0",
+        "typescript": "^5.4.5"
+    },
+    "dependencies": {
+        "compressing": "^1.10.1"
+    }
+}
