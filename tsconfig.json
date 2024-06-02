@@ -1,7 +1,7 @@
 {
   "compilerOptions": {
     "target": "ESNext",                                  /* Set the JavaScript language version for emitted JavaScript and include compatible library declarations. */
-    "module": "ESNext",                                /* Specify what module code is generated. */
+    "module": "NodeNext",                                /* Specify what module code is generated. */
     "rootDir": "./src",                               /* Specify the base directory to resolve non-relative module names. */
     "paths": {
         "extension/*": ["./src/@lib/rem-extension/*"]

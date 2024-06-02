@@ -1,7 +1,6 @@
 const {
     whenReady, win, provide
 } = require('extension/index')
-const path = require('path')
 
 let winId
 
