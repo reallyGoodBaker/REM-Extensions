@@ -1,9 +1,7 @@
-import { onSetting, lyricsExtensionSettings } from "./settings.js"
-export { onSetting }
-
-export function onLoad({ AudioPlayer, Playlist, store }) {
+export function onLoad({ AudioPlayer, Playlist, settings, store }) {
     globalThis.AudioPlayer = AudioPlayer
     globalThis.Playlist = Playlist
+    globalThis.settings = settings
     globalThis.store = store
 }
 
@@ -86,11 +84,11 @@ const topBottom = document.createElement('div')
 
 let attachBottom = true
 
-function addCustomUI() {
+async function addCustomUI() {
     const {
         currentFontSize,
         nextFontSize,
-    } = lyricsExtensionSettings
+    } = await settings.get()
 
     div.style.cssText = `
     box-sizing: border-box;
@@ -197,7 +195,7 @@ function findSuitableLyrics(_time, lyrics) {
     return [ _currentLyric, _nextLyric ]
 }
 
-function renderLyrics() {
+async function renderLyrics() {
     const _time = AudioPlayer.seek()
 
     const {
@@ -205,7 +203,7 @@ function renderLyrics() {
         nextFontSize,
         showRomaLyric,
         showTranslatedLyric,
-    } = lyricsExtensionSettings
+    } = await settings.get()
 
     currentEle.style.fontSize = currentFontSize
     nextEle.style.fontSize = nextFontSize

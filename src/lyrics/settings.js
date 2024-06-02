@@ -1,16 +1,13 @@
 import { TextField, ToggleField } from "../@lib/rem-extension/ui/settings.js"
 
-export const lyricsExtensionSettings = {
+const lyricsExtensionSettings = {
     currentFontSize: 'x-large',
     nextFontSize: 'larger',
     showRomaLyric: false,
     showTranslatedLyric: false,
 }
 
-let _settings
-
 export async function onSetting(safeStore) {
-    _settings = safeStore
     const settings = await safeStore.get()
     if (!settings) {
         safeStore.set(lyricsExtensionSettings)
@@ -42,11 +39,12 @@ export async function onSetting(safeStore) {
     ]
 }
 
-export function onSetSetting(name, value) {
-    lyricsExtensionSettings[name] = value
-    _settings.set(lyricsExtensionSettings)
+export async function onSetSetting(store, name, value) {
+    const data = await store.get()
+    data[name] = value
+    store.set(data)
 }
 
-export function onGetSetting(name) {
-    return lyricsExtensionSettings[name]
+export async function onGetSetting(store, name) {
+    return (await store.get())[name]
 }
