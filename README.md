@@ -5,7 +5,7 @@ npm i
 
 ## 修改打包的目标(index.json)
 ```json
-{ "example" }
+[ "example", "example2" ]
 ```
 
 ## 构建源码（打包为文件夹）
