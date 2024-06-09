@@ -1,4 +1,6 @@
-const $ = require('../../@lib/jquery.js')
+const $ = require('./jquery.js')
+
+const { connect, subscribe, invoke, win } = window
 
 const { ipcRenderer } = require('electron')
 const player = connect('player-controller')
@@ -23,11 +25,11 @@ const mainWindowUpdate = subscribe('mainWindowVisible', ([ visible ]) => {
 })
 
 win.beforeClose = () => {
-    player.destroy()
-    update.destroy()
-    playlist.destroy()
-    playerUpdate.destroy()
-    mainWindowUpdate.destroy()
+    player.end()
+    update.end()
+    playlist.end()
+    playerUpdate.end()
+    mainWindowUpdate.end()
 }
 
 render()
