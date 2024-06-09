@@ -35,16 +35,14 @@ render()
 let duration = Infinity
 
 ;(async() => {
-    if (process.platform === 'darwin' || process.platform === 'win32') {
-        const { colorHue, dark } = await ipcRenderer.invoke('app?theme')
-        if (dark) {
-            $('body').addClass('dark')
-        } else {
-            $('body').removeClass('dark')
-        }
-
-        $('.music_progress_line').css('background-color', `hsl(${colorHue}, 90%, 80%)`)
+    const { colorHue, dark } = await ipcRenderer.invoke('app?theme')
+    if (dark) {
+        $('body').addClass('dark')
+    } else {
+        $('body').removeClass('dark')
     }
+
+    $('.music_progress_line').css('background-color', `hsl(${colorHue}, 90%, 80%)`)
 })()
 
 $('.music_progress_bar').on('click', ev => {
