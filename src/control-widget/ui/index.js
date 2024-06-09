@@ -1,6 +1,6 @@
 const $ = require('./jquery.js')
 
-const { connect, subscribe, invoke, win } = window
+const { connect, subscribe, win } = window
 
 const { ipcRenderer } = require('electron')
 const player = connect('player-controller')
@@ -24,12 +24,12 @@ const mainWindowUpdate = subscribe('mainWindowVisible', ([ visible ]) => {
         
 })
 
-win.beforeClose = () => {
-    player.end()
-    update.end()
-    playlist.end()
-    playerUpdate.end()
-    mainWindowUpdate.end()
+win.beforeClose = async () => {
+    await player.close()
+    await update.close()
+    await playlist.close()
+    await playerUpdate.close()
+    await mainWindowUpdate.close()
 }
 
 render()
@@ -49,7 +49,7 @@ let duration = Infinity
 
 $('.music_progress_bar').on('click', ev => {
     const seekTo = ev.offsetX / 360 * duration
-    invoke(player, `:seek|${seekTo}`)
+    player.invoke(`:seek|${seekTo}`)
 })
 
 $("#expand").on("click", function () {
@@ -59,18 +59,18 @@ $("#expand").on("click", function () {
 })
 
 $("#playBtn").on("click", async function () {
-    const playing = await invoke(player, ".isPlaying")
-    await invoke(player, playing ? ':pause' : ':play')
+    const playing = await player.invoke(".isPlaying")
+    await player.invoke(playing ? ':pause' : ':play')
     await render()
 })
 
 $("#prevBtn").on("click", async function () {
-    await invoke(playlist, ":previous")
+    playlist.invoke(":previous")
     await render()
 })
 
 $("#nextBtn").on("click", async function () {
-    await invoke(playlist, ":next")
+    playlist.invoke(":next")
     await render()
 })
 
@@ -79,8 +79,8 @@ async function render() {
         name,
         al,
         ar,
-    } = await invoke(player, '.audioData')
-    duration = Number(await invoke(player, ".duration"))
+    } = await player.invoke('.audioData')
+    duration = Number(await player.invoke(".duration"))
 
     $(".name").text(name)
     $(".singer-album").text(ar.map(a => a.name).join(', ') + " - " + al.name)

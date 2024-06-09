@@ -10,6 +10,11 @@ interface Win {
     init: (winId: number) => void,
 }
 
+interface Socket {
+    close(): Promise<void>
+    invoke(data: string | Uint8Array): Promise<any>
+}
+
 declare global {
     interface Window {
         readonly win: Win
@@ -18,10 +23,9 @@ declare global {
         readonly webFrame: Electron.WebFrame
         readonly webUtils: Electron.WebUtils
 
-        readonly server: (name: string, listener?: (socket: net.Socket) => void) => void
-        readonly connect: (name: string) => net.Socket
-        readonly invoke: (socket: net.Socket, data: string | Uint8Array) => Promise<any>
-        readonly subscribe: (type: string, receiver?: (val: any) => void) => net.Socket
+        readonly server: (name: string, listener?: (socket: Socket) => void) => void
+        readonly connect: (name: string) => Socket
+        readonly subscribe: (type: string, receiver?: (val: any) => void) => Socket
         readonly unlink: (name: string) => void
 
         readonly invoker: InvokerServer
