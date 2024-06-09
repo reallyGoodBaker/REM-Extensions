@@ -61,7 +61,7 @@ export const call: (name: string, ...args: readonly TransferListItem[]) => void
 type InternalProvideKeys = 'beforeDisable' | 'clearTimers' | 'ready'
 
 /**
- * 为 `ExtensionHost` 提供跨进程调用的函数
+ * 为 `ExtensionHost` 提供跨线程调用的函数
  */
 export const provide: (name: InternalProvideKeys, handler: (...args: readonly TransferListItem[]) => any) => void
 
@@ -69,7 +69,7 @@ export const ready: () => Promise<boolean>
 export const whenReady: (cb: Function) => void
 
 interface Win {
-    openWindow(file: string, options: Electron.BrowserWindowConstructorOptions): Promise<string>
+    openWindow(file: string, options: Electron.BrowserWindowConstructorOptions): Promise<number>
     closeWindow(id: string): Promise<void>
 }
 
