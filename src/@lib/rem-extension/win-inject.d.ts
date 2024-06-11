@@ -26,6 +26,7 @@ declare global {
         readonly server: (name: string, listener?: (socket: Socket) => void) => void
         readonly connect: (name: string) => Socket
         readonly subscribe: (type: string, receiver?: (val: any) => void) => Socket
+        readonly subscribePcm: (type: string, receiver?: (val: Buffer) => void) => Socket
         readonly unlink: (name: string) => void
 
         readonly invoker: InvokerServer

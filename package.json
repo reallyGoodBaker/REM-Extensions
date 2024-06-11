@@ -24,6 +24,7 @@
         "typescript": "^5.4.5"
     },
     "dependencies": {
+        "audify": "^1.9.0",
         "compressing": "^1.10.1"
     }
 }

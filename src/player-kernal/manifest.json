@@ -1,0 +1,14 @@
+{
+    "name": "输出方式",
+    "ver": "1.0.0",
+    "desc": "修改播放器的播放api (可能造成延迟)",
+    "author": "RGB",
+    "entry": "main.js",
+    "id": "23dc60bf-4621-4ab3-92f7-50bbf8c6ea1b",
+    "settings": "settings.js",
+
+    "components": [
+        "output"
+    ]
+
+}

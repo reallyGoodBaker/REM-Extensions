@@ -4,8 +4,8 @@ const commonjs = require('@rollup/plugin-commonjs')
 const fs = require('fs/promises')
 const path = require('path')
 const { rollup } = require('rollup')
-const { typescriptPaths } = require('rollup-plugin-typescript-paths')
 const Bundler = require('parcel-bundler')
+const { existsSync } = require('fs')
 
 async function getManifest(folder) {
     return JSON.parse(
@@ -48,6 +48,19 @@ async function getPlugins() {
     return plugins = JSON.parse(await fs.readFile(path.join(__dirname, '../../index.json')))
 }
 
+function getPath(filename) {
+    if (existsSync(filename)) {
+        return filename
+    }
+
+    const tsPath = filename.replace('.js', '.ts')
+    if (existsSync(tsPath)) {
+        return tsPath
+    }
+
+    return filename
+}
+
 async function tasks(sourcemap=true) {
     const cpy = await import('cpy')
 
@@ -65,17 +78,17 @@ async function tasks(sourcemap=true) {
 
         await fs.rm(buildDest, { recursive: true, force: true })
         await cpy.default([src + '/**/*.json'], buildDest)
+        await cpy.default([src + '/node_modules/**/*'], path.join(buildDest, 'node_modules'))
 
         if (entry) {
             tasks.push({
-                input: path.join(src, entry),
+                input: getPath(path.join(src, entry)),
                 output: {
                     file: path.join(buildDest, `${entry}`),
                     format: 'cjs',
                     sourcemap
                 },
                 plugins: [
-                    typescriptPaths(),
                     typescript(),
                 ],
             })
@@ -83,14 +96,13 @@ async function tasks(sourcemap=true) {
 
         if (uiEntry) {
             tasks.push({
-                input: path.join(src, uiEntry),
+                input: getPath(path.join(src, uiEntry)),
                 output: {
                     file: path.join(buildDest, `${uiEntry}`),
                     format: 'esm',
                     sourcemap
                 },
                 plugins: [
-                    typescriptPaths(),
                     typescript(),
                 ],
             })   
@@ -98,14 +110,13 @@ async function tasks(sourcemap=true) {
 
         if (settings) {
             tasks.push({
-                input: path.join(src, settings),
+                input: getPath(path.join(src, settings)),
                 output: {
                     file: path.join(buildDest, `${settings}`),
                     format: 'esm',
                     sourcemap
                 },
                 plugins: [
-                    typescriptPaths(),
                     typescript(),
                 ],
             })   
@@ -117,15 +128,14 @@ async function tasks(sourcemap=true) {
             } else {
                 for (const [ _, { main, renderer } ] of Object.entries(windows)) {
                     main && tasks.push({
-                        input: path.join(src, main),
+                        input: getPath(path.join(src, main)),
                         output: {
                             file: path.join(buildDest, `${main}`),
                             format: 'cjs',
                             sourcemap
                         },
                         plugins: [
-                            typescriptPaths(),
-                            typescript()
+                            typescript(),
                         ]
                     })
 

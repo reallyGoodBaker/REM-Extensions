@@ -69,8 +69,35 @@ export const ready: () => Promise<boolean>
 export const whenReady: (cb: Function) => void
 
 interface Win {
-    openWindow(file: string, options: Electron.BrowserWindowConstructorOptions): Promise<number>
+    openWindow(file: string, options: Electron.BrowserWindowConstructorOptions): Promise<string>
     closeWindow(id: string): Promise<void>
 }
 
 export const win: Win
+
+interface Socket {
+    close(): Promise<void>
+    invoke(data: string | Uint8Array): Promise<any>
+}
+
+interface Ipc {
+    server(name: string, listener?: (socket: net.Socket) => void): void
+    connect(name: string): Socket
+    subscribe(type: string, receiver?: (val: any) => void): Socket
+    unlink(name: string): void
+    subscribePcm(type: string, receiver?: (val: Buffer) => void): Socket
+}
+
+export const ipc: Ipc
+
+interface AudioOutputDevice {
+    readonly deviceId: string
+    readonly label: string
+}
+
+interface Output {
+    device(): Promise<AudioOutputDevice>
+    pluginOutput(): Promise<boolean>
+}
+
+export const output: Output
