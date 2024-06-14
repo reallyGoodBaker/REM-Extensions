@@ -1,4 +1,4 @@
-import { TextField, ToggleField } from "../@lib/rem-extension/ui/settings.js"
+import { TextField, ToggleField } from "extension/ui/index"
 
 const lyricsExtensionSettings = {
     currentFontSize: 'x-large',
@@ -7,10 +7,11 @@ const lyricsExtensionSettings = {
     showTranslatedLyric: false,
 }
 
-export async function onSetting(safeStore) {
-    const settings = await safeStore.get()
+/**@type {UIExports.OnSetting}*/
+export async function onSetting(store) {
+    const settings = await store.get()
     if (!settings) {
-        safeStore.set(lyricsExtensionSettings)
+        store.set(lyricsExtensionSettings)
     } else {
         Object.assign(lyricsExtensionSettings, settings)
     }
@@ -39,12 +40,18 @@ export async function onSetting(safeStore) {
     ]
 }
 
+/**
+ * @type {UIExports.OnSetSetting}
+ */
 export async function onSetSetting(store, name, value) {
     const data = await store.get()
     data[name] = value
     store.set(data)
 }
 
+/**
+ * @type {UIExports.OnGetSetting}
+ */
 export async function onGetSetting(store, name) {
     return (await store.get())[name]
 }

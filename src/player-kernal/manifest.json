@@ -5,7 +5,7 @@
     "author": "RGB",
     "entry": "main.js",
     "id": "23dc60bf-4621-4ab3-92f7-50bbf8c6ea1b",
-    "settings": "settings.js",
+    "settings": "./settings.js",
 
     "components": [
         "output"

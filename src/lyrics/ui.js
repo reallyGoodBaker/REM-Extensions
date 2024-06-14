@@ -1,16 +1,24 @@
-export function onLoad({ AudioPlayer, Playlist, settings, store }) {
-    globalThis.AudioPlayer = AudioPlayer
-    globalThis.Playlist = Playlist
-    globalThis.settings = settings
-    globalThis.store = store
+/**
+ * @type {UIModules}
+ */
+let modules
+
+/**
+ * @type {UIExports.OnLoad}
+ */
+export function onLoad(m) {
+    modules = m
 }
 
+/**
+ * @type {UIExports.OnReady}
+ */
 export async function onReady() {
     addCustomUI()
     await tryRequestLyrics()
     setupLoop()
 
-    AudioPlayer.on('loadedContent', tryRequestLyrics)
+    modules.AudioPlayer.on('loadedContent', tryRequestLyrics)
 }
 
 let currentLyricsBody = null
@@ -19,6 +27,7 @@ let lyrics = []
     ,romalrc = []
 
 async function requestLyrics() {
+    const { AudioPlayer, store } = modules
     const lyricsReq = await NeteaseApi.getLyrics(
         AudioPlayer.audioData.data.id,
         await store.get('cookie')
@@ -88,7 +97,7 @@ async function addCustomUI() {
     const {
         currentFontSize,
         nextFontSize,
-    } = await settings.get()
+    } = await modules.settings.get()
 
     div.style.cssText = `
     box-sizing: border-box;
@@ -196,14 +205,14 @@ function findSuitableLyrics(_time, lyrics) {
 }
 
 async function renderLyrics() {
-    const _time = AudioPlayer.seek()
+    const _time = modules.AudioPlayer.seek()
 
     const {
         currentFontSize,
         nextFontSize,
         showRomaLyric,
         showTranslatedLyric,
-    } = await settings.get()
+    } = await modules.settings.get()
 
     currentEle.style.fontSize = currentFontSize
     nextEle.style.fontSize = nextFontSize

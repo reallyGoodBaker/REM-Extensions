@@ -1,11 +1,10 @@
-const resolve = require('@rollup/plugin-node-resolve')
 const typescript = require('@rollup/plugin-typescript')
-const commonjs = require('@rollup/plugin-commonjs')
 const fs = require('fs/promises')
 const path = require('path')
 const { rollup } = require('rollup')
 const Bundler = require('parcel-bundler')
 const { existsSync } = require('fs')
+const { rewritePlugin } = require('./rewrite-import')
 
 async function getManifest(folder) {
     return JSON.parse(
@@ -61,6 +60,12 @@ function getPath(filename) {
     return filename
 }
 
+const tsconfigEsm = {
+    compilerOptions: {
+        module: "ESNext"
+    }
+}
+
 async function tasks(sourcemap=true) {
     const cpy = await import('cpy')
 
@@ -83,6 +88,7 @@ async function tasks(sourcemap=true) {
         if (entry) {
             tasks.push({
                 input: getPath(path.join(src, entry)),
+                external: [ /extension.*/ ],
                 output: {
                     file: path.join(buildDest, `${entry}`),
                     format: 'cjs',
@@ -97,29 +103,33 @@ async function tasks(sourcemap=true) {
         if (uiEntry) {
             tasks.push({
                 input: getPath(path.join(src, uiEntry)),
+                external: [ /extension.*/ ],
                 output: {
-                    file: path.join(buildDest, `${uiEntry}`),
+                    file: path.join(buildDest, uiEntry),
                     format: 'esm',
                     sourcemap
                 },
                 plugins: [
-                    typescript(),
+                    typescript(tsconfigEsm),
+                    rewritePlugin(buildDest, uiEntry)
                 ],
-            })   
+            })
         }
 
         if (settings) {
             tasks.push({
                 input: getPath(path.join(src, settings)),
+                external: [ /extension.*/ ],
                 output: {
-                    file: path.join(buildDest, `${settings}`),
+                    file: path.join(buildDest, settings),
                     format: 'esm',
                     sourcemap
                 },
                 plugins: [
-                    typescript(),
+                    typescript(tsconfigEsm),
+                    rewritePlugin(buildDest, settings)
                 ],
-            })   
+            })
         }
 
         if (windows) {
@@ -129,6 +139,7 @@ async function tasks(sourcemap=true) {
                 for (const [ _, { main, renderer } ] of Object.entries(windows)) {
                     main && tasks.push({
                         input: getPath(path.join(src, main)),
+                        external: [ /extension.*/ ],
                         output: {
                             file: path.join(buildDest, `${main}`),
                             format: 'cjs',
