@@ -2,7 +2,7 @@ node_modules
 build
 package-lock.json
 yarn.lock
-dist
+
 *.log
 *.pid
 *.pid.lock
