@@ -23,6 +23,7 @@
     },
     "dependencies": {
         "audify": "^1.9.0",
-        "compressing": "^1.10.1"
+        "compressing": "^1.10.1",
+        "NeteaseCloudMusicApi": "^4.24.0"
     }
 }

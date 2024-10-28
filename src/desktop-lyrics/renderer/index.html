@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>lyrics</title>
+</head>
+<body>
+    <style>
+        body {
+            box-sizing: border-box;
+            -webkit-app-region: drag;
+            width: 100vw;
+            height: 100vh;
+            margin: 0;
+            padding: 20px;
+            overflow: hidden;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+        }
+
+        body:hover {
+            background-color: rgba(0, 0, 0, 0.2);
+        }
+
+        .lrc {
+            color: aquamarine;
+            font-weight: normal;
+            font-size: larger;
+            -webkit-text-stroke: 0.5px #fff;
+            filter: drop-shadow(0 0 2px #000);
+        }
+
+        .focus {
+            color: gold;
+            font-weight: bold;
+            font-size: x-large;
+        }
+
+        .container {
+            user-select: none;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+        }
+
+        .container > :last-child {
+            align-self: flex-end;
+        }
+    </style>
+    <div class="container">
+        <div class="lrc" id="top"></div>
+        <div class="lrc" id="bottom"></div>
+    </div>
+    <script src="./index.ts"></script>
+</body>
+</html>

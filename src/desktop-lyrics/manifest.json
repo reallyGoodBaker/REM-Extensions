@@ -1,0 +1,22 @@
+{
+    "name": "桌面歌词",
+    "ver": "1.0.0",
+    "desc": "将歌词显示在桌面上",
+    "author": "RGB",
+    "entry": "index.js",
+    "id": "23dc60b0-4621-4ab3-92f7-50baf8b6ec1a",
+
+    "components": [
+        "audio_player",
+        "playlist",
+        "new_window"
+    ],
+
+    "windows": {
+        "desktop-lyrics": {
+            "openDevTools": true,
+            "main": "./main.js",
+            "renderer": "./renderer/index.html"
+        }
+    }
+}
