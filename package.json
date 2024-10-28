@@ -5,7 +5,7 @@
     "main": "index.js",
     "scripts": {
         "build-source": "node ./scripts/build-source.js",
-        "build": "node ./scripts/build.js"
+        "build-binaries": "node ./scripts/build.js"
     },
     "author": "",
     "license": "ISC",

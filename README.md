@@ -15,5 +15,5 @@ npm run build-source
 
 ## 构建压缩文件（tar）
 ```bash
-npm run build
+npm run build-binaries
 ```
