@@ -9,7 +9,6 @@
     <style>
         body {
             box-sizing: border-box;
-            -webkit-app-region: drag;
             width: 100vw;
             height: 100vh;
             margin: 0;
@@ -18,10 +17,6 @@
             display: flex;
             flex-direction: column;
             justify-content: space-between;
-        }
-
-        body:hover {
-            background-color: rgba(0, 0, 0, 0.2);
         }
 
         .lrc {
@@ -45,11 +40,23 @@
             justify-content: center;
         }
 
+        .panel {
+            background-color: rgba(0, 0, 0, 0.4);
+        }
+
+        .draggable {
+            -webkit-app-region: drag;
+        }
+
+        .no-pointer {
+            pointer-events: none;
+        }
+
         .container > :last-child {
             align-self: flex-end;
         }
     </style>
-    <div class="container">
+    <div class="container" id="container">
         <div class="lrc" id="top"></div>
         <div class="lrc" id="bottom"></div>
     </div>

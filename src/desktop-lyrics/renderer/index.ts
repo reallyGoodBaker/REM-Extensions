@@ -1,3 +1,5 @@
+import { ipcRenderer } from "electron"
+
 const { subscribe, connect } = window
 const player = connect('player-controller')
 const lyricServer = connect('lyric')
@@ -29,15 +31,12 @@ function getLineIndex(lrc: Lyric[], time: number): [number, number] {
         return [ lrclen - 2, lrclen - 1 ]
     }
 
-    let prev: Lyric = lrc[0]
     for (let i = 1; i < lrclen; i++) {
         const cur = lrc[i]
 
         if (cur.time > time) {
             return [ i - 1, i ]
         }
-
-        prev = cur
     }
 
     return [ lrclen - 2, lrclen - 1 ]
@@ -71,6 +70,7 @@ function parseLrc(lrcstr: string): Lyric[] | null {
 
 const lineTop = document.getElementById('top') as HTMLDivElement
 const lineBottom = document.getElementById('bottom') as HTMLDivElement
+const container = document.getElementById('container') as HTMLDivElement
 
 function renderLines(time: number) {
     if (!lrc) return
@@ -88,7 +88,6 @@ function renderLines(time: number) {
     }
 }
 
-
 subscribe('player', loadLyrics)
 subscribe('playstate', ([ ,,, current ]) => {
     renderLines(current * 1000)
@@ -96,3 +95,5 @@ subscribe('playstate', ([ ,,, current ]) => {
 
 loadLyrics()
 
+container.addEventListener('mousedown', () => ipcRenderer.send('dragMode'))
+window.addEventListener('mouseup', () => ipcRenderer.send('exitDragMode'))

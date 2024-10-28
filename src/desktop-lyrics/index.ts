@@ -26,6 +26,7 @@ whenReady(async () => {
         transparent: true,
         maximizable: false,
         skipTaskbar: true,
+        resizable: false,
         minHeight: 120,
         minWidth: 380,
     })
