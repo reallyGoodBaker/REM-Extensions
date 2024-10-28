@@ -13,7 +13,6 @@ export function onReady(bw: BrowserWindow) {
 
     let dragMode = false
     ipcMain.on('dragMode', () => {
-        console.log('???')
         // let last = screen.getCursorScreenPoint()
         // const looper = () => setImmediate(() => {
         //     const [ x, y ] = bw.getPosition()
