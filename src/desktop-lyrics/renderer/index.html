@@ -13,25 +13,27 @@
             width: 100vw;
             height: 100vh;
             margin: 0;
-            padding: 20px;
+            padding: 0;
             overflow: hidden;
             display: flex;
             flex-direction: column;
             justify-content: space-between;
+            align-items: center;
         }
 
         .lrc {
             color: aquamarine;
             font-weight: normal;
-            font-size: larger;
+            font-size: 24px;
             -webkit-text-stroke: 0.5px #fff;
             filter: drop-shadow(0 0 2px #000);
+            text-wrap: nowrap;
+            transition: 0.16s ease-in-out;
         }
 
         .focus {
             color: gold;
-            font-weight: bold;
-            font-size: x-large;
+            font-size: 28px;
         }
 
         .container {
@@ -39,6 +41,9 @@
             display: flex;
             flex-direction: column;
             justify-content: center;
+            width: calc-size(fit-content, size);
+            height: calc-size(fit-content, size);
+            transition: all 1s ease;
         }
 
         .panel {

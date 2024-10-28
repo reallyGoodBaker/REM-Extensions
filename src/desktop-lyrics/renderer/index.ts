@@ -3,6 +3,8 @@ import { ipcRenderer } from "electron"
 const { subscribe, connect } = window
 const player = connect('player-controller')
 const lyricServer = connect('lyric')
+const getSettings = connect('settings')
+const setSettings = connect('set-settings')
 
 interface Lyric {
     time: number
@@ -72,20 +74,26 @@ const lineTop = document.getElementById('top') as HTMLDivElement
 const lineBottom = document.getElementById('bottom') as HTMLDivElement
 const container = document.getElementById('container') as HTMLDivElement
 
-function renderLines(time: number) {
+async function renderLines(time: number) {
     if (!lrc) return
     const [ l1, l2 ] = getLineIndex(lrc, time)
+    let current, next
     if (lrc && l1 % 2) {
-        lineBottom.classList.add('focus')
-        lineTop.classList.remove('focus')
-        lineBottom.innerText = lrc[l1].lyric
-        lineTop!.innerText = lrc[l2].lyric
+        current = lineBottom
+        next = lineTop
     } else {
-        lineTop.classList.add('focus')
-        lineBottom.classList.remove('focus')
-        lineTop.innerText = lrc![l1].lyric
-        lineBottom.innerText = lrc![l2].lyric
+        current = lineTop
+        next = lineBottom
     }
+
+    current.classList.add('focus')
+    next.classList.remove('focus')
+    current.innerText = lrc![l1].lyric
+    next.innerText = lrc![l2].lyric
+
+    // console.log('???')
+    // const settings = await getSettings.invoke('')
+    // console.log(settings)
 }
 
 subscribe('player', loadLyrics)

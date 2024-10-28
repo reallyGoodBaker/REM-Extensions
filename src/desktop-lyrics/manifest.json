@@ -5,11 +5,13 @@
     "author": "RGB",
     "entry": "index.js",
     "id": "23dc60b0-4621-4ab3-92f7-50baf8b6ec1a",
+    "settings": "settings.js",
 
     "components": [
         "audio_player",
         "playlist",
-        "new_window"
+        "new_window",
+        "store"
     ],
 
     "windows": {

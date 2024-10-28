@@ -7,8 +7,8 @@ export function onReady(bw: BrowserWindow) {
     bw.setVisibleOnAllWorkspaces(true)
 
     bw.setBounds({
-        x: width / 2 - 230,
-        y: height - 120
+        x: width / 2 - 300,
+        y: height - 140
     })
 
     let dragMode = false

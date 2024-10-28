@@ -1,4 +1,4 @@
-import { ipc, provide, whenReady, win } from 'extension'
+import { ipc, provide, whenReady, win, settings } from 'extension'
 import https from 'node:https'
 import { Socket } from 'net'
 
@@ -42,18 +42,34 @@ let winId: string
 
 whenReady(async () => {
     winId = await win.openWindow('desktop-lyrics', {
-        width: 460,
+        width: 600,
         height: 120,
         alwaysOnTop: true,
         frame: false,
         transparent: true,
         maximizable: false,
+        minimizable: false,
         skipTaskbar: true,
         resizable: false,
-        minHeight: 120,
-        minWidth: 380,
     })
 })
 
 provide('beforeDisable', () => win.closeWindow(winId))
 
+function settingServer() {
+    ipc.server('settings', (sock: Socket) => {
+        sock.on('data', async () => {
+            console.log(await settings.get())
+            sock.write(JSON.stringify(await settings.get()))
+        })
+    })
+
+    ipc.server('set-settings', (sock: Socket) => {
+        sock.on('data', async buf => {
+            const data = JSON.parse(buf.toString('utf-8'))
+            await settings.set(data)
+        })
+    })
+}
+
+settingServer()
