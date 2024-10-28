@@ -12,7 +12,8 @@ async function tar(name) {
 
     await compressing.tar.compressDir(
         path.join(build, name),
-        path.join(dist, name)
+        path.join(dist, name),
+        Infinity
     )
 }
 
