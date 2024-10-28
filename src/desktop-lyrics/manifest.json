@@ -14,7 +14,7 @@
 
     "windows": {
         "desktop-lyrics": {
-            "openDevTools": true,
+            "openDevTools": false,
             "main": "./main.js",
             "renderer": "./renderer/index.html"
         }
