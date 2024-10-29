@@ -14,6 +14,7 @@ exports.onReady = bw => {
     })
 
     function restoreWindows() {
+        bw.hide()
         BrowserWindow.getAllWindows().forEach(w => {
             if (w.id === bw.id) {
                 w.hide()
