@@ -3,6 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="Content-Security-Policy" content="default-src 'self' 'unsafe-inline';">
     <title>lyrics</title>
 </head>
 <body>
@@ -21,6 +22,10 @@
             align-items: center;
         }
 
+        .body.unlock {
+            background-color: rgba(0, 0, 0, 0.5);
+        }
+
         .lrc {
             color: aquamarine;
             font-weight: normal;
@@ -29,11 +34,13 @@
             filter: drop-shadow(0 0 2px #000);
             text-wrap: nowrap;
             transition: 0.16s ease-in-out;
+            width: calc-size(fit-content, size);
+            height: calc-size(fit-content, size);
         }
 
         .focus {
             color: gold;
-            font-size: 28px;
+            scale: 1.1;
         }
 
         .container {
@@ -48,10 +55,6 @@
 
         .panel {
             background-color: rgba(0, 0, 0, 0.4);
-        }
-
-        .draggable {
-            -webkit-app-region: drag;
         }
 
         .no-pointer {

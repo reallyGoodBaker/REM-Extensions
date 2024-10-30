@@ -3,8 +3,7 @@ import { ipcRenderer } from "electron"
 const { subscribe, connect } = window
 const player = connect('player-controller')
 const lyricServer = connect('lyric')
-const getSettings = connect('settings')
-const setSettings = connect('set-settings')
+const settings = connect('settings')
 
 interface Lyric {
     time: number
@@ -26,11 +25,11 @@ async function loadLyrics() {
     tlrc = parseLrc(t?.lyric)
 }
 
-function getLineIndex(lrc: Lyric[], time: number): [number, number] {
+function getLineIndex(lrc: Lyric[], time: number): [ number, number? ] {
     const lrclen = lrc.length
 
     if (time >= lrc.at(-1)!.time) {
-        return [ lrclen - 2, lrclen - 1 ]
+        return [ lrclen - 1 ]
     }
 
     for (let i = 1; i < lrclen; i++) {
@@ -59,7 +58,7 @@ function parseLrc(lrcstr: string): Lyric[] | null {
                 }
             }
 
-            const [ $, m, s, rad ] = /(\d+):(\d+)\.(\d+)/g.exec(time.slice(1)) as string[]
+            const [ _, m, s, rad ] = /(\d+):(\d+)\.(\d+)/g.exec(time.slice(1)) as string[]
             return {
                 time: Number(s) * 1000 + Number(m) * 60 * 1000 + Number(rad),
                 lyric
@@ -72,7 +71,7 @@ function parseLrc(lrcstr: string): Lyric[] | null {
 
 const lineTop = document.getElementById('top') as HTMLDivElement
 const lineBottom = document.getElementById('bottom') as HTMLDivElement
-const container = document.getElementById('container') as HTMLDivElement
+const setLock = lock()
 
 async function renderLines(time: number) {
     if (!lrc) return
@@ -89,11 +88,29 @@ async function renderLines(time: number) {
     current.classList.add('focus')
     next.classList.remove('focus')
     current.innerText = lrc![l1].lyric
-    next.innerText = lrc![l2].lyric
+    next.innerText = l2 ? lrc![l2].lyric : ' '
 
-    // console.log('???')
-    // const settings = await getSettings.invoke('')
-    // console.log(settings)
+    const { colorCurrent, colorNext, fontSize, lock } = JSON.parse(await settings.invoke('["get"]'))
+    current.style.color = colorCurrent
+    next.style.color = colorNext
+    current.style.fontSize = fontSize
+    next.style.fontSize = fontSize
+
+    if (setLock(lock)) {
+        document.body.classList[!lock ? 'add' : 'remove']('unlock')   
+    }
+}
+
+function lock() {
+    let lockState = true
+    return (newState: boolean) => {
+        if (newState !== lockState) {
+            ipcRenderer.invoke('desktop-lyrics-lock', lockState = newState)
+            return true
+        }
+
+        return false
+    }
 }
 
 subscribe('player', loadLyrics)
@@ -102,6 +119,3 @@ subscribe('playstate', ([ ,,, current ]) => {
 })
 
 loadLyrics()
-
-container.addEventListener('mousedown', () => ipcRenderer.send('dragMode'))
-window.addEventListener('mouseup', () => ipcRenderer.send('exitDragMode'))

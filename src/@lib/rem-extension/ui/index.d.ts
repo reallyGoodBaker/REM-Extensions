@@ -8,7 +8,7 @@ export function TextField(
     label?: string,
     defaultValue?: string,
     name?: string
-): StringUIElement
+): BooleanUIElement
 
 export function NumberField(
     label?: string,
@@ -16,4 +16,6 @@ export function NumberField(
     min?: number,
     max?: number,
     name?: string
-): NumberUIElement
+): BooleanUIElement
+
+export function fromObject(obj: any, i18n?: any): UIElement[]
