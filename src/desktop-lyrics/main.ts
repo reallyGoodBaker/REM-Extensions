@@ -9,6 +9,7 @@ export function onReady(bw: BrowserWindow) {
         x: width / 2 - 360,
         y: height - 140
     })
+    bw.setIgnoreMouseEvents(true)
 
     ipcMain.handle('desktop-lyrics-lock', (_, setTo) => {
         if (typeof setTo === 'boolean') {
