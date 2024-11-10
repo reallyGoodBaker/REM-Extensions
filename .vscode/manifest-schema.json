@@ -1,0 +1,15 @@
+{
+    "$schema": "http://json-schema.org/draft-07/schema#",
+    "type": "object",
+    "properties": {
+        "name": {
+            "type": "string",
+            "description": "扩展名"
+        },
+        "ver": {
+            "type": "string",
+            "pattern": "\\d\\.\\d\\.\\d",
+            "description": "版本号，格式为 x.x.x"
+        }
+    }
+}

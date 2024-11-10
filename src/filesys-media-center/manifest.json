@@ -1,0 +1,16 @@
+{
+    "name": "文件媒体中心",
+    "ver": "1.0.0",
+    "desc": "使用本地文件系统提供音乐、视频、图片等媒体文件",
+    "author": "RGB",
+    "entry": "index.js",
+    "id": "f07bc813-05e3-4039-bec9-f7f8573873d9",
+
+    "components": [
+        "audio_player",
+        "notification",
+        "playlist",
+        "protocol"
+    ]
+
+}
