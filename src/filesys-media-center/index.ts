@@ -1,6 +1,12 @@
-import { notification, whenReady, threads, provide } from 'extension'
+import { notification, whenReady, threads, provide, timeout } from 'extension'
+import { ProviderDescritpor } from 'extension/protocol/common/provider'
 import { lookup, unregisterProvider } from 'extension/protocol/node/provider'
-import { songsDescriptor } from './descriptor/songs'
+
+const providerDescritpor: ProviderDescritpor = {
+    category: 'provider.songs',
+    name: 'fsMediaCenter.songs',
+    pipeName: 'fsMediaCenter.songs',
+}
 
 function notify(message: unknown) {
     const notificationId = `thread-${Math.random()}`
@@ -21,10 +27,12 @@ whenReady(async () => {
         notify(ev.data)
     })
 
-    console.log(await lookup({ category: 'provider.songs' }))
+    timeout(async () => {
+        console.log(await lookup({ category: providerDescritpor.category }))
+    }, 1000)
 })
 
 provide('beforeDisable', () => {
     threads.killThread('songs')
-    unregisterProvider(songsDescriptor)
+    unregisterProvider(providerDescritpor)
 })
