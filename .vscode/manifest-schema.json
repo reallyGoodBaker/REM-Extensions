@@ -10,6 +10,87 @@
             "type": "string",
             "pattern": "\\d\\.\\d\\.\\d",
             "description": "版本号，格式为 x.x.x"
+        },
+        "desc": {
+            "type": "string",
+            "description": "描述"
+        },
+        "author": {
+            "type": "string",
+            "description": "作者"
+        },
+        "icon": {
+            "type": "string",
+            "description": "图标路径"
+        },
+        "id": {
+            "type": "string",
+            "description": "扩展ID"
+        },
+        "entry": {
+            "type": "string",
+            "description": "插件入口文件路径"
+        },
+        "uiEntry": {
+            "type": "string",
+            "description": "主渲染进程入口文件路径"
+        },
+        "settings": {
+            "type": "string",
+            "description": "设置文件路径"
+        },
+        "components": {
+            "type": "array",
+            "items": {
+                "type": "string",
+                "enum": [
+                    "audio_player",
+                    "playlist",
+                    "new_window",
+                    "store",
+                    "notification",
+                    "replace_main_window",
+                    "threads"
+                ]
+            },
+            "description": "组件列表"
+        },
+        "windows": {
+            "type": "object",
+            "patternProperties": {
+                "^\\w+$": {
+                    "type": "object",
+                    "properties": {
+                        "replaceMain": {
+                            "type": "boolean",
+                            "description": "是否替换主窗口"
+                        },
+                        "openDevTools": {
+                            "type": "boolean",
+                            "description": "是否打开开发者工具"
+                        },
+                        "main": {
+                            "type": "string",
+                            "description": "主窗口文件路径"
+                        },
+                        "renderer": {
+                            "type": "string",
+                            "description": "渲染进程文件路径"
+                        }
+                    }
+                }
+            }
+        },
+        "threads": {
+            "type": "object",
+            "patternProperties": {
+                "^\\w+$": {
+                    "type": "string"
+                }
+            }
         }
-    }
+    },
+    "required": [
+        "name", "ver", "id", "components"
+    ]
 }

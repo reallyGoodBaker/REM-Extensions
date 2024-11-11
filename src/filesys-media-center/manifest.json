@@ -7,10 +7,11 @@
     "id": "f07bc813-05e3-4039-bec9-f7f8573873d9",
 
     "components": [
-        "audio_player",
         "notification",
-        "playlist",
-        "protocol"
-    ]
+        "threads"
+    ],
 
+    "threads": {
+        "songs": "./components/song.js"
+    }
 }

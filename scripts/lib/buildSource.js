@@ -79,11 +79,28 @@ async function tasks(sourcemap=true) {
         checkRequires(manifest)
         
         const buildDest = path.join(__dirname, '../../build', plugin)
-        const { entry, uiEntry, settings, windows, components } = manifest
+        const { entry, uiEntry, settings, windows, components, threads } = manifest
 
         await fs.rm(buildDest, { recursive: true, force: true })
         await cpy.default([src + '/**/*.json'], buildDest)
         await cpy.default([src + '/node_modules/**/*'], path.join(buildDest, 'node_modules'))
+
+        if (threads) {
+            for (const filePath of Object.values(threads)) {
+                tasks.push({
+                    input: getPath(path.join(src, filePath)),
+                    external: [ /extension.*/ ],
+                    output: {
+                        file: path.join(buildDest, `${filePath}`),
+                        format: 'cjs',
+                        sourcemap
+                    },
+                    plugins: [
+                        typescript(),
+                    ],
+                })
+            }
+        }
 
         if (entry) {
             tasks.push({
