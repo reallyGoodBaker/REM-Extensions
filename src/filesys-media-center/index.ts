@@ -1,5 +1,6 @@
 import { notification, whenReady, threads, provide } from 'extension'
 import { lookup, unregisterProvider } from 'extension/protocol/node/provider'
+import { songsDescriptor } from './descriptor/songs'
 
 function notify(message: unknown) {
     const notificationId = `thread-${Math.random()}`
@@ -25,5 +26,5 @@ whenReady(async () => {
 
 provide('beforeDisable', () => {
     threads.killThread('songs')
-    unregisterProvider('fsMediaCenter.songs')
+    unregisterProvider(songsDescriptor)
 })

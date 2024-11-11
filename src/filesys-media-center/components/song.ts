@@ -1,13 +1,7 @@
 import { Provider } from 'extension/protocol/common/provider'
 import { songEncoderDecoder } from 'extension/protocol/common/song'
-import { ProviderDescritpor } from 'extension/protocol/common/provider'
 import { registerProvider } from 'extension/protocol/node/provider'
-
-const providerDescriptor: ProviderDescritpor = {
-    name: 'fsMediaCenter.songs',
-    pipeName: 'fsMediaCenter.songs',
-    category: 'provider.songs'
-}
+import { songsDescriptor } from '../descriptor/songs'
 
 class SongProvider implements Provider {
     async read(uri: string): Promise<Buffer> {
@@ -23,6 +17,6 @@ class SongProvider implements Provider {
 }
 
 registerProvider(
-    providerDescriptor,
+    songsDescriptor,
     new SongProvider()
 )
