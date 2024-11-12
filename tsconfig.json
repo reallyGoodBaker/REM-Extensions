@@ -71,7 +71,6 @@
     },
     "include": [
         "src/**/*",
-        "src/control-widget/ui/jquery.js",
-        "lib/**/*"
+        "src/control-widget/ui/jquery.js"
     ]
 }
