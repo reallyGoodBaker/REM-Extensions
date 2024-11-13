@@ -114,7 +114,7 @@ interface UIModules {
     readonly store?: RendererStore
 }
 
-namespace UIExports {
+declare namespace UIExports {
     /**
      * Only for "uiEntry"
      */

@@ -29,7 +29,7 @@ whenReady(async () => {
 
     timeout(async () => {
         console.log(await lookup({ category: providerDescritpor.category }))
-    }, 1000)
+    })
 })
 
 provide('beforeDisable', () => {

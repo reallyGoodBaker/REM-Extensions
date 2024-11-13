@@ -5,10 +5,10 @@
         "rootDir": "./src", /* Specify the base directory to resolve non-relative module names. */
         "paths": {
             "extension": [
-                "./lib/extension/index.d.ts"
+                "./src/@lib/extension/index.d.ts"
             ],
             "extension/*": [
-                "./lib/extension/*"
+                "./src/@lib/extension/*"
             ]
         }, /* Specify a set of entries that re-map imports to additional lookup locations. */
         "allowJs": true, /* Allow JavaScript files to be a part of your program. Use the 'checkJS' option to get errors from these files. */
@@ -70,7 +70,7 @@
         "skipLibCheck": true /* Skip type checking all .d.ts files. */
     },
     "include": [
-        "src/**/*",
-        "src/control-widget/ui/jquery.js"
-    ]
+        "./src/**/*",
+        "./src/control-widget/ui/jquery.js"
+    ],
 }

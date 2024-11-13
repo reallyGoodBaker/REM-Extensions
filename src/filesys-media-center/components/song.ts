@@ -1,7 +1,7 @@
 import { Provider } from 'extension/protocol/common/provider'
 import { songEncoderDecoder } from 'extension/protocol/common/song'
 import { registerProvider } from 'extension/protocol/node/provider'
-import { ProviderDescritpor } from '../../../lib/extension/protocol/common/provider';
+import { ProviderDescritpor } from 'extension/protocol/common/provider'
 
 const providerDescritpor: ProviderDescritpor = {
     category: 'provider.songs',
