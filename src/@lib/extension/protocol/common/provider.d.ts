@@ -5,7 +5,7 @@ export interface Provider {
 }
 export declare function promiseResolvers<T>(): {
     promise: Promise<T>;
-    resolve: (value: void) => void;
+    resolve: (value?: T) => void;
     reject: (reason: any) => void;
 };
 export type LookupConfig = Partial<ProviderDescritpor>;
